@@ -1,5 +1,6 @@
 # anubhooti-website
 <img src="/Project/static/assets/img/logo-final.png"/>
+
 1. Clone the repository
   ```
   git clone https://github.com/mdb2301/anubhooti-website.git
