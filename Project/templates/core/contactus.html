@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% block content %}
+<section class="call-to-action text-center text-white" style="background-color: black;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <h2 class="mb-4">Contact Us</h2>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <form method="POST">
+                    {{form.hidden_tag()}}
+                    <div class="row mt-3 ml-2 mr-2">
+                        {{form.name.label}}
+                        {{form.name(class="form-control form-control-md bg-transparent text-white",autocomplete='off')}}    
+                    </div>
+                    <div class="row mt-3 ml-2 mr-2">
+                        {{form.email.label}}
+                        {{form.email(class="form-control form-control-md bg-transparent text-white",autocomplete='off')}}
+                    </div>
+                    <div class="row mt-3 ml-2 mr-2">
+                        {{form.comment.label}}
+                        {{form.comment(style='resize:none;',rows=10,cols=20,class="form-control bg-transparent text-white")}}
+                    </div>
+                    {{form.submit(class="btn btn-md btn-outline-light mt-3")}}
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

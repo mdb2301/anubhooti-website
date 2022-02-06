@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+  {% if acts %}
+    <div class="col">
+      {% for act in acts %}      
+        <div class="container">
+          <button 
+            class="btn p-4 col-md-12" 
+            type="button" 
+            data-toggle="collapse" 
+            data-target="#activity{{act.id}}" 
+            aria-expanded="false" 
+            aria-controls="activity{{act.id}}" 
+            style=
+              "border-radius:0;
+               background-color:#009ad6;
+               color:white;
+               border:1px solid white;
+               display:inline-flex;
+               box-shadow:none;
+               font-size:1rem;">
+            <div>{{ act.activity }}</div>
+            <div id="date{{act.id}}" style="margin-left:auto;">{{ act.time.strftime('%d-%m-%Y')}}</div>
+          </button>
+          <div class="collapse col-md-12" id="activity{{act.id}}">
+            <div class="card-body">
+              <p>Time: {{ act.time.strftime('%I:%M %p')}}</p>
+              <hr>
+              <p>Input</p>
+              <p>Output</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <h3 class="mt-4 ml-4">No previous activity</h3>
+  {% endif %}
+{% endblock %}

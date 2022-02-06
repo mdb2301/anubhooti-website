@@ -1,0 +1,94 @@
+{% extends 'index.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Products - Anubhooti Solutions</title>
+</head>
+<body>
+    {% block content %}
+    <section class="text-center pb-5 jumbotron" style="background-color: #0f161e;border-radius:0;margin-bottom:0;" id="products">
+        <h3 style="color:white;">Web Applications</h3>
+        <hr class="col-lg-3 bg-white mb-5" style="width:2rem;height:0.3rem;">
+        <div class="row text-center offset-md-1 mt-5 mb-5 pt-4 pb-5">
+            <div class="card col-md-3 ml-4 mr-4 mt-2 mycard" style="background-color: #bedae8;">
+                <i class="card-img-top fa fa-4x fa-volume-up mt-5 mb-3" aria-hidden="true"></i>
+                <div class="card-body">
+                    <h5 class="card-title mt-5 mb-4">Text-To-Speech</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="{{url_for('users.login')}}" style="background-color: #0b8abc;" class="btn btn-primary mt-5 mb-2">Explore<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="card col-md-3 ml-4 mr-4 mt-2 mycard" style="background-color: #bedae8;">
+                <i class="card-img-top fa fa-file-text-o fa-4x mt-5 mb-3" aria-hidden="true"></i>
+                <div class="card-body">
+                    <h5 class="card-title mt-5 mb-4">Speech-To-Text</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="{{url_for('users.login')}}" style="background-color: #0b8abc;" class="btn btn-primary mt-5 mb-2">Explore<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="card col-md-3 ml-4 mr-4 mt-2 mycard" style="background-color: #bedae8;">
+                <i class="card-img-top fa fa-4x fa-smile-o mt-5 mb-3" aria-hidden="true"></i>
+                <div class="card-body">
+                    <h5 class="card-title mt-5 mb-4">Emotion Detection</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="{{url_for('users.login')}}" style="background-color: #0b8abc;" class="btn btn-primary mt-5 mb-2">Explore<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+<!-- -------------------------------- Desktop Applications Section ---------------------------------------- -->
+        <h3 style="color:white;">Desktop Applications</h3>
+        <hr class="col-lg-3 bg-white mb-5" style="width:2rem;height:0.3rem;">
+
+        <div class="col-md-10 text-center mt-5 mb-5 pt-4 pb-5 mx-auto">
+            <div class="card p-2 mx-2 my-4 mycard" style="background-color: #bedae8;">
+                <div class="row">
+                    <div class="col-md-5 order-md-1">
+                        <!--Change the src of iframe-->
+                        <iframe style="width:100%;height:14rem;" class="mx-auto" src="https://www.youtube.com/embed/b_sQ9bMltGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-4 order-md-2 my-auto ml-4" style="text-align: left;">
+                        <!--Change h4 and p for title and description -->
+                        <h4>Product 1</h4>
+                        <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" style="background-color: #0b8abc;" class="btn btn-primary">Enquire<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-2 mx-2 my-4 mycard" style="background-color: #bedae8;">
+                <div class="row">
+                    <div class="col-md-5 order-md-1">
+                        <!--Change the src of iframe-->
+                        <iframe style="width:100%;height:14rem;" class="mx-auto" src="https://www.youtube.com/embed/b_sQ9bMltGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-4 order-md-2 my-auto ml-4" style="text-align: left;">
+                        <!--Change h4 and p for title and description -->
+                        <h4>Product 2</h4>
+                        <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" style="background-color: #0b8abc;" class="btn btn-primary">Enquire<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-2 mx-2 my-4 mycard" style="background-color: #bedae8;">
+                <div class="row">
+                    <div class="col-md-5 order-md-1">
+                        <!--Change the src of iframe-->
+                        <iframe style="width:100%;height:14rem;" class="mx-auto" src="https://www.youtube.com/embed/b_sQ9bMltGU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-4 order-md-2 my-auto ml-4" style="text-align: left;">
+                        <!--Change h4 and p for title and description -->
+                        <h4>Product 3</h4>
+                        <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" style="background-color: #0b8abc;" class="btn btn-primary">Enquire<i class="fa fa-angle-right ml-2" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+</body>
+</html>
+
+
+

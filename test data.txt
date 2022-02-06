@@ -1,0 +1,12 @@
+Administrator account:
+E-mail: admin@anubhooti.com	
+Password: adminpass
+
+Sample user account:
+E-mail: firstuser@example.com	
+Password: firstuser
+
+Stripe payment testing:
+Card no: 4242 4242 4242 4242
+Expiry date: Any date in future
+CVV: Any 3-digit CVV

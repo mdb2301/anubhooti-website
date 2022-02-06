@@ -1,0 +1,121 @@
+from flask import url_for,redirect
+from Project import db,loginmanager,app
+from werkzeug.security import generate_password_hash,check_password_hash
+# UserMixin : By default, when a user is not actually logged in, current_user is set to an AnonymousUserMixin object.
+from flask_login import UserMixin,current_user
+from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship,backref
+from flask_admin import Admin,AdminIndexView,BaseView,expose
+from flask_admin.contrib.sqla import ModelView
+from flask_wtf import FlaskForm
+from wtforms import StringField,PasswordField,SubmitField
+from wtforms.validators import DataRequired,EqualTo,Length
+from flask_login import current_user
+
+class User(db.Model,UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    name = db.Column(db.String(50))
+    number = db.Column(db.Integer())
+    membership = db.Column(db.String(50))
+    subscription_time = db.Column(db.DateTime())
+    email = db.Column(db.String(50),unique=True,index=True)
+    password_hash = db.Column(db.String(200))
+    time_left = db.Column(db.Integer())
+    words_left = db.Column(db.Integer())
+    account_type = db.Column(db.String())
+
+    def set_password(self,password):
+        self.password_hash = generate_password_hash(password,method='sha256')
+
+    def check_password(self,password):
+        return check_password_hash(self.password_hash,password)
+
+    def __init__(self,name,number,email,password,time_left,words_left):
+        self.name = name
+        self.number = number
+        self.email = email
+        self.password_hash = generate_password_hash(password)
+        self.membership = 'FREE'
+        self.subscription_time = datetime.now()
+        self.time_left = time_left
+        self.words_left = words_left
+        self.account_type = "user"
+
+    def get_reset_token(self,expires=300):
+        s = Serializer(app.config['SECRET_KEY'],expires_in=expires)
+        return s.dumps({'id':self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            id = s.loads(token)['id'] 
+        except:
+            return None
+        return User.query.get(id)           
+
+
+class Activity(db.Model):
+    __tablename__ = 'activity'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'))
+    user = relationship("User", backref=backref("users", uselist=False))
+    time = db.Column(db.DateTime())
+    activity = db.Column(db.String(200))
+    input = db.Column(db.String(200))
+    output = db.Column(db.String(200))
+
+    def __init__(self,user_id,time,activity,input,output):
+        self.user_id = user_id
+        self.time = time
+        self.activity = activity
+        self.input = input
+        self.output = output
+
+class Feedback(db.Model):
+    __tablename__ = 'feedbacks'
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(64))
+    email = db.Column(db.String(64))
+    comment = db.Column(db.String(300))
+
+    def __init__(self,name,email,comment):
+        self.name = name
+        self.email = email
+        self.comment = comment
+
+class ChangePassword(FlaskForm):
+    current_password = PasswordField("Enter current password",[DataRequired()])
+    new_password = PasswordField("Enter new Password",[DataRequired(),EqualTo('confirm_new_password',message="Passwords don't match"),Length(min=6,message="Password too short")])
+    confirm_new_password = PasswordField("Confirm new Password",[DataRequired()])
+    submit = SubmitField("Change Password")
+
+class AdminPass(BaseView):
+    @expose('/',methods=['GET','POST'])
+    def index(self):
+        success = False
+        form = ChangePassword()
+        if form.validate_on_submit():
+            user = User.query.get(current_user.id)
+            if user.check_password(form.current_password.data):
+                user.set_password(form.new_password.data)
+                db.session.commit()
+                success = True
+        
+        return self.render('/admin/change-password.html',form=form,success=success)
+
+class MyAdminIndexView(AdminIndexView):             #for /admin
+    def is_accessible(self):
+        return current_user.is_authenticated and int(current_user.get_id())==1
+
+    def inaccessible_callback(self, name, **kwargs):
+        return redirect(url_for('users.login')) 
+
+admin = Admin(app ,name='Admin', template_mode='bootstrap3',index_view = MyAdminIndexView())
+admin.add_view(ModelView(User,db.session))    
+admin.add_view(ModelView(Activity, db.session))
+admin.add_view(ModelView(Feedback,db.session))
+admin.add_view(AdminPass("Change Password",endpoint="/admin/password"))

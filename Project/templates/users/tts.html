@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h4>Text-To-Speech</h4>
+    <form action="{{ url_for('users.check') }}" method="POST">
+        
+        <textarea style='resize:none;' rows=10 cols=20 class="form-control" name="textinput" placeholder="Enter Text Here">{{input_text}}</textarea>
+
+        <div class="row mt-4 ml-4">
+            <input type="submit" id="checkwords" class="btn btn-outline-info mr-4 pl-6 pr-6">Convert</button>
+            <audio controls autoplay class="ml-4">
+                <source src = "/static/" type="audio/wav">
+            </audio>
+        </div>
+    </form>
+{% endblock %}

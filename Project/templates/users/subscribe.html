@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        console.log("Sanity check")
+
+        fetch("{{url_for('users.config')}}")
+        .then((result)=>{return result.json();})
+        .then((data)=>{
+            const stripe = Stripe(data.publicKey);
+            document.querySelector("#submit-ind").addEventListener("click",()=>{
+                fetch("/charge_individual")
+                .then((result)=> { return result.json(); })
+                .then((data)=>{
+                    console.log(data);
+                    return stripe.redirectToCheckout({sessionId: data.sessionId})
+                })
+                .then((res)=>{
+                    console.log(res);
+                });
+            });
+            document.querySelector("#submit-inst").addEventListener("click",()=>{
+                fetch("/charge_institutional")
+                .then((result)=> { return result.json(); })
+                .then((data)=>{
+                    console.log(data);
+                    return stripe.redirectToCheckout({sessionId: data.sessionId})
+                })
+                .then((res)=>{
+                    console.log(res);
+                });
+            });
+        });
+    </script>
+
+    <div class="row">
+        <div class="col-md-4 mt-2">
+            <div class="card">
+                <div class="card-header text-center" style="background-color:#345bcb;color:white;">Basic</div>
+                <div class="text-center p-4" style="font-size:2rem;">FREE</div>
+                <ul class="list-group text-center">
+                    <li class="list-group-item" style="border-radius:0;">Process upto 180 characters of text.</li>
+                    <li class="list-group-item" style="border-radius:0;">Process upto 10 minutes of audio files.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4 mt-2">
+            <div class="card">
+                <div class="card-header text-center" style="background-color:#345bcb;color:white;">Individual</div>
+                <div class="text-center p-4" style="font-size:2rem;">₹ 1000</div>
+                <ul class="list-group text-center">
+                    <li class="list-group-item" style="border-radius:0;">Process upto 2000 words of text.</li>
+                    <li class="list-group-item" style="border-radius:0;">Process upto 2 hours of audio files.</li>
+                    <button class="btn mt-5" style="background-color: yellowgreen;color:white;border-radius:0;" id="submit-ind">Proceed to Pay</button>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4 mt-2">
+            <div class="card">
+                <div class="card-header text-center" style="background-color:#345bcb;color:white;">Institutional</div>
+                <div class="text-center p-4" style="font-size:2rem;">₹ 5000</div>
+                <ul class="list-group text-center">
+                    <li class="list-group-item" style="border-radius:0;">Process upto 10,000 words of text.</li>
+                    <li class="list-group-item" style="border-radius:0;">Process upto 10 hours of audio files.</li>
+                    <button class="btn mt-5" style="background-color: yellowgreen;color:white;border-radius:0;" id="submit-inst">Proceed to Pay</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

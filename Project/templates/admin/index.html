@@ -1,0 +1,18 @@
+{% extends 'admin/master.html' %}
+
+{% block body %}
+<style>
+  .btn{
+    border: 1px solid #0b8abc;
+  }
+  .btn:hover{
+    background-color: #0b8abc;
+    color:white;
+  }
+</style>
+<div class="jumbotron">
+  <h1>Admin Control Panel</h1>
+  <a href="{{ url_for('users.logout') }}" class="btn mt-4" role="button" aria-pressed="true">Log out</a>
+</div>
+
+{% endblock %}
